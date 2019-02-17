@@ -29,7 +29,7 @@ module.exports = function(req, res) {
         admin
           .database()
           .ref("users/" + phone)
-          .update({ code, codeValid: true }, () => {
+          .update({ code: code, codeValid: true }, () => {
             res.send({ success: true });
           });
       }
