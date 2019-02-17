@@ -6,6 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 firebase-debug.log*
 functions/service_account.json
+functions/twilio_service.js
 
 # Firebase cache
 .firebase/
