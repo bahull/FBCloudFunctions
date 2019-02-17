@@ -7,13 +7,12 @@ module.exports = function(req, res) {
   }
 
   const phone = String(req.body.phone).replace(/[^\d]/g, "");
+  const code = Math.floor(Math.random() * 8999 + 1000);
 
   admin
     .auth()
     .getUser(phone)
     .then(userRecord => {
-      const code = Math.floor(Math.random() * 8999 + 1000);
-
       twilio.messages.create({
         body: `Your code is ${code}`,
         to: phone,
@@ -21,13 +20,11 @@ module.exports = function(req, res) {
       });
     })
     .then(resp => {
-      console.log("I amde it");
-      console.log("in the db");
       admin
         .database()
         .ref("users/" + phone)
         .update({ code: code, codeValid: true }, err => {
-          return console.log(err, "success on db");
+          return res.status(200).send({ successful: true });
         });
     })
     .catch(err => {
